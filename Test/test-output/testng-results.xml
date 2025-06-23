@@ -2,28 +2,28 @@
 <testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2025-06-23T00:40:11 PDT" name="Default suite" finished-at="2025-06-23T00:40:42 PDT" duration-ms="30103">
+  <suite started-at="2025-06-23T01:38:19 PDT" name="Default suite" finished-at="2025-06-23T01:38:47 PDT" duration-ms="27663">
     <groups>
     </groups>
-    <test started-at="2025-06-23T00:40:11 PDT" name="Default test" finished-at="2025-06-23T00:40:42 PDT" duration-ms="30103">
+    <test started-at="2025-06-23T01:38:19 PDT" name="Default test" finished-at="2025-06-23T01:38:47 PDT" duration-ms="27663">
       <class name="DemoPackage.logintest">
-        <test-method is-config="true" signature="launchBrowser()[pri:0, instance:DemoPackage.logintest@33f676f6]" started-at="2025-06-23T00:40:11 PDT" name="launchBrowser" finished-at="2025-06-23T00:40:19 PDT" duration-ms="7634" status="PASS">
+        <test-method is-config="true" signature="launchBrowser()[pri:0, instance:DemoPackage.logintest@33f676f6]" started-at="2025-06-23T01:38:20 PDT" name="launchBrowser" finished-at="2025-06-23T01:38:24 PDT" duration-ms="4731" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- launchBrowser -->
-        <test-method is-config="true" signature="setup()[pri:0, instance:DemoPackage.logintest@33f676f6]" started-at="2025-06-23T00:40:19 PDT" name="setup" finished-at="2025-06-23T00:40:20 PDT" duration-ms="748" status="PASS">
+        <test-method is-config="true" signature="setup()[pri:0, instance:DemoPackage.logintest@33f676f6]" started-at="2025-06-23T01:38:24 PDT" name="setup" finished-at="2025-06-23T01:38:25 PDT" duration-ms="598" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setup -->
-        <test-method signature="runAllLoginTests()[pri:0, instance:DemoPackage.logintest@33f676f6]" started-at="2025-06-23T00:40:20 PDT" name="runAllLoginTests" description="Runs login test cases with valid and invalid credentials" finished-at="2025-06-23T00:40:41 PDT" duration-ms="20568" status="PASS">
+        <test-method signature="runAllLoginTests()[pri:0, instance:DemoPackage.logintest@33f676f6]" started-at="2025-06-23T01:38:25 PDT" name="runAllLoginTests" description="Runs login test cases with valid and invalid credentials" finished-at="2025-06-23T01:38:46 PDT" duration-ms="21328" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- runAllLoginTests -->
-        <test-method is-config="true" signature="teardown()[pri:0, instance:DemoPackage.logintest@33f676f6]" started-at="2025-06-23T00:40:41 PDT" name="teardown" finished-at="2025-06-23T00:40:42 PDT" duration-ms="851" status="PASS">
+        <test-method is-config="true" signature="teardown()[pri:0, instance:DemoPackage.logintest@33f676f6]" started-at="2025-06-23T01:38:47 PDT" name="teardown" finished-at="2025-06-23T01:38:47 PDT" duration-ms="611" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- teardown -->
-        <test-method is-config="true" signature="closeBrowser()[pri:0, instance:DemoPackage.logintest@33f676f6]" started-at="2025-06-23T00:40:42 PDT" name="closeBrowser" finished-at="2025-06-23T00:40:42 PDT" duration-ms="4" status="PASS">
+        <test-method is-config="true" signature="closeBrowser()[pri:0, instance:DemoPackage.logintest@33f676f6]" started-at="2025-06-23T01:38:47 PDT" name="closeBrowser" finished-at="2025-06-23T01:38:47 PDT" duration-ms="3" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- closeBrowser -->

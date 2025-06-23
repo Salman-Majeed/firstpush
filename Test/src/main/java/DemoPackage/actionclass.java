@@ -10,7 +10,7 @@ public class actionclass {
     public static void main(String[] args) throws InterruptedException {
 
         // Setup Chrome
-        WebDriverManager.chromedriver().setup();
+        /*WebDriverManager.chromedriver().setup();
         WebDriver driver = new ChromeDriver();
 
         driver.manage().window().maximize();
@@ -52,7 +52,7 @@ public class actionclass {
         WebElement dropdown = driver.findElement(By.id("oldSelectMenu"));
         Select select = new Select(dropdown);
         select.selectByVisibleText("Yellow");
-        Thread.sleep(2000);
+        Thread.sleep(2000);*/
 
        // driver.quit();
     }
