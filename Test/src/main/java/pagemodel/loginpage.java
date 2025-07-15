@@ -1,45 +1,23 @@
 package pagemodel;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
 public class loginpage {
-
     WebDriver driver;
+
+    // Correct locators based on HTML
+    By emailField = By.name("username");     // <input name="username" ...>
+    By passwordField = By.name("password");  // <input name="password" ...>
+    By loginBtn = By.xpath("//button[@type='submit']"); // <button type="submit">Login</button>
 
     public loginpage(WebDriver driver) {
         this.driver = driver;
-        PageFactory.initElements(driver, this);
     }
 
-    @FindBy(id = "mat-input-0")
-    WebElement emailField;
-
-    @FindBy(id = "mat-input-1")
-    WebElement passwordField;
-
-    @FindBy(xpath = "//button[@type='button']")
-    WebElement loginButton;
-
-    public void enterEmail(String email) {
-        emailField.clear();
-        emailField.sendKeys(email);
-    }
-
-    public void enterPassword(String pass) {
-        passwordField.clear();
-        passwordField.sendKeys(pass);
-    }
-
-    public void clickLogin() {
-        loginButton.click();
-    }
-
-    public void loginAs(String email, String pass) {
-        enterEmail(email);
-        enterPassword(pass);
-        clickLogin();
+    public void login(String email, String password) {
+        driver.findElement(emailField).sendKeys(email);
+        driver.findElement(passwordField).sendKeys(password);
+        driver.findElement(loginBtn).click();
     }
 }

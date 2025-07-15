@@ -1,5 +1,5 @@
 package DemoPackage;
- 
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -8,39 +8,39 @@ import org.testng.annotations.*;
 import com.aventstack.extentreports.*;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import io.github.bonigarcia.wdm.WebDriverManager;
- 
+
 public class orangehrmlogintest {
- 
+
     WebDriver driver;
     ExtentReports extent;
     ExtentTest test;
- 
+
     @BeforeTest
     public void setupReportAndBrowser() {
+        // ✅ Class-level variables use karo, local mat banao
+        extent = new ExtentReports();  
         ExtentSparkReporter reporter = new ExtentSparkReporter("OrangeHRMLoginReport.html");
-        extent = new ExtentReports();
         extent.attachReporter(reporter);
         test = extent.createTest("OrangeHRM Login Functionality");
- 
+
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
         test.info("Chrome launched");
         driver.manage().window().maximize();
     }
- 
+
     @BeforeMethod
     public void openLoginPage() throws InterruptedException {
         driver.get("https://admin-dev.bloxtech.site/#/auth/login");
-        Thread.sleep(3000); // Wait for page to load
+        Thread.sleep(3000); // ✅ Wait for page to load
         test.info("Opened OrangeHRM login page");
     }
- 
+
     @Test(priority = 1)
     public void testInvalidEmail() throws InterruptedException {
         WebElement username = driver.findElement(By.id("mat-input-0"));
         WebElement password = driver.findElement(By.id("mat-input-1"));
         WebElement loginBtn = driver.findElement(By.xpath("//button[@type='button']"));
-        
 
         username.clear();
         password.clear();
@@ -85,7 +85,7 @@ public class orangehrmlogintest {
         username.clear();
         password.clear();
         username.sendKeys("admin.user@blox.com");
-        password.sendKeys("y0yfskju"); // remove extra space
+        password.sendKeys("y0yfskju");
         loginBtn.click();
 
         Thread.sleep(3000);
@@ -98,6 +98,10 @@ public class orangehrmlogintest {
 
     @AfterTest
     public void tearDown() {
-        extent.flush();	
+        if (driver != null) {
+        //    driver.quit();  // ✅ Browser band karo
+            test.info("Browser closed");
+        }
+        extent.flush();  // ✅ Report likho
     }
 }

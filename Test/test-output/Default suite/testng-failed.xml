@@ -3,15 +3,15 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="DemoPackage.logintest">
+      <class name="DemoPackage.waridlabfull">
         <methods>
-          <include name="runAllLoginTests"/>
-          <include name="teardown"/>
+          <include name="tearDown"/>
+          <include name="testBranchFormFlow"/>
+          <include name="testDashboardWidgets"/>
           <include name="setup"/>
-          <include name="closeBrowser"/>
-          <include name="launchBrowser"/>
+          <include name="testLoginScenarios"/>
         </methods>
-      </class> <!-- DemoPackage.logintest -->
+      </class> <!-- DemoPackage.waridlabfull -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->
