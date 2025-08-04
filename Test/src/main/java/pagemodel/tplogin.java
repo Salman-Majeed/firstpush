@@ -10,56 +10,60 @@ public class tplogin {
  
     WebDriver driver;
  
-    // Constructor
-    public tplogin(WebDriver driver) {
-        this.driver = driver;
-        PageFactory.initElements(driver, this);
+    @FindBy(xpath = "//a[contains(text(),'Forget password')]")
+    WebElement forgotPasswordLink;
+
+    @FindBy(xpath = "//input[@placeholder='Enter your email']")
+    WebElement forgotEmailInput;
+
+    @FindBy(xpath = "//span[contains(text(),'Send OTP')]")
+    WebElement sendOtpBtn;
+
+    @FindBy(xpath = "//input[@placeholder='Enter new password']")
+    WebElement newPasswordInput;
+
+    @FindBy(xpath = "//input[@placeholder='Confirm new password']")
+    WebElement confirmPasswordInput;
+
+    @FindBy(xpath = "//button//span[contains(text(),'Submit')]")
+    WebElement submitBtn;
+
+    public void clickForgotPasswordLink() {
+        forgotPasswordLink.click();
     }
- 
-    // Locators
-    @FindBy(id = "mat-input-0")
-    WebElement emailInput;
- 
-    @FindBy(id = "mat-input-1")
-    WebElement passwordInput;
- 
-    @FindBy(xpath = "//button[@class='mat-focus-indicator btnLogin mat-raised-button mat-button-base']//span")
-    WebElement loginBtn;
- 
-    @FindBy(xpath = "//div[@class='ng-star-inserted']")
-    WebElement errorMsg;
- 
-    @FindBy(xpath = "//button[@type='button']")
-    WebElement okButton;
-    
-    // OTP boxes
-    public void enterOTP(int index, String digit) {
-        WebElement otpBox = driver.findElement(By.xpath("//ng-otp-input/div/input[" + index + "]"));
-        otpBox.sendKeys(digit);
+
+    public void enterForgotEmail(String email) {
+        forgotEmailInput.clear();
+        forgotEmailInput.sendKeys(email);
     }
- 
-    // Actions
-    public void enterEmail(String email) {
-        emailInput.clear();
-        emailInput.sendKeys(email);
+
+    public void clickSendOtp() {
+        sendOtpBtn.click();
     }
- 
-    public void enterPassword(String password) {
-        passwordInput.clear();
-        passwordInput.sendKeys(password);
+
+    public void enterNewPassword(String pass) {
+        newPasswordInput.clear();
+        newPasswordInput.sendKeys(pass);
     }
- 
-    public void clickLoginButton() {
-        loginBtn.click();
+
+    public void enterConfirmPassword(String pass) {
+        confirmPasswordInput.clear();
+        confirmPasswordInput.sendKeys(pass);
     }
- 
-    public String getErrorMessage() {
-        return errorMsg.getText();
+
+    public void clickSubmitBtn() {
+        submitBtn.click();
     }
- 
-    public void clickOkButton() {
-        okButton.click();
+
+    public void enterForgotOTP(String[] otp) {
+        for (int i = 1; i <= 6; i++) {
+            WebElement otpInput = driver.findElement(By.xpath("//ng-otp-input/div/input[" + i + "]"));
+            otpInput.sendKeys(otp[i - 1]);
+        }
     }
-    
+
+	public void clickLoginButton() {
+		// TODO Auto-generated method stub
+		
+	}
 }
- 

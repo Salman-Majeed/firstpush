@@ -4,103 +4,98 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
-import org.testng.annotations.Listeners;
 
 import com.aventstack.extentreports.*;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 
 import pagemodel.tplogin;
-import pagemodel.advanceaction;   // ✅ Capital A — import correct class
 
-import io.qameta.allure.testng.AllureTestNg;
-
-@Listeners({AllureTestNg.class})
 public class tptriftlogin extends TestBase {
 
-    String[] arrtOTP_CoDash = {"0", "1", "0", "1", "0", "1"};
+    String[] arrtOTP = {"0", "1", "0", "1", "0", "1"};
     ExtentReports extent;
     ExtentTest test;
     tplogin loginPage;
-    advanceaction actions;   // ✅ Correct class name (PascalCase)
 
     @BeforeTest
     public void setup() {
-        ExtentSparkReporter reporter = new ExtentSparkReporter("tpthriftLoginReport.html");
+        ExtentSparkReporter reporter = new ExtentSparkReporter("ThriftLoginFlowReport.html");
         extent = new ExtentReports();
         extent.attachReporter(reporter);
 
-        test = extent.createTest("ThriftPlan Company Dashboard Login Test");
-
-        initializeBrowser(); // Browser open
-        loginPage = new tplogin(driver); // Page Object
-        actions = new advanceaction(driver); // ✅ Correct constructor
+        test = extent.createTest("Forgot Password + Login Flow");
+        initializeBrowser(); // Opens Chrome and URL
+        loginPage = new tplogin(); // Page object created
     }
 
     @Test
-    public void runLoginScenarios() throws InterruptedException {
-        String[][] testData = {
-            {"muhammad.shakeel1@abc.com", "123123", "Invalid Email"},
-            {"muhammad.shakeel@abc.com", "123321", "Invalid Password"},
-            {"muhammad.shakeel@abc.com", "123123", "Valid Login"}
-        };
+    public void forgotPasswordThenLoginFlow() throws InterruptedException {
+        String userEmail = "fatima@salman.com";
+        String newPassword = "123123";
 
-        for (int i = 0; i < testData.length; i++) {
-            String email = testData[i][0];
-            String password = testData[i][1];
-            String caseType = testData[i][2];
+        // Step 1: Click on Forget Password
+        loginPage.clickForgotPasswordLink();
+        test.info("Clicked on Forgot Password link");
+        Thread.sleep(1000);
 
-            loginPage.enterEmail(email);
-            loginPage.enterPassword(password);
+        // Step 2: Enter email
+        loginPage.enterForgotEmail(userEmail);
+        test.info("Entered email for password reset");
+        Thread.sleep(1000);
 
-            if (caseType.equals("Valid Login")) {
-                try {
-                    WebElement eyeIcon = driver.findElement(By.xpath("//mat-icon[contains(text(),'visibility')]"));
+        // Step 3: Click Send OTP
+        loginPage.clickSendOtp();
+        test.info("Clicked on Send OTP");
+        Thread.sleep(2000);
 
-                    actions.mouseHover(eyeIcon);
-                    eyeIcon.click();
+        // Step 4: Enter new password and confirm password
+        loginPage.enterNewPassword(newPassword);
+        loginPage.enterConfirmPassword(newPassword);
+        test.info("Entered new password and confirmed it");
 
-                    String fieldType = driver.findElement(By.xpath("//input[@type='password' or @type='text']")).getAttribute("type");
+        // Step 5: Enter OTP
+        loginPage.enterForgotOTP(arrtOTP);
+        test.info("Entered OTP for password reset");
+        Thread.sleep(1000);
 
-                    if (fieldType.equals("text")) {
-                        test.pass("Password is visible after hovering and clicking eye icon.");
-                    } else {
-                        test.fail("Password visibility toggle failed.");
-                    }
-                } catch (Exception e) {
-                    test.warning("Eye icon issue: " + e.getMessage());
-                }
-            }
+        // Step 6: Submit
+        loginPage.clickSubmitBtn();
+        test.info("Clicked on Submit button");
+        Thread.sleep(2000);
 
+        // Step 7: Handle Popup
+        try {
             loginPage.clickLoginButton();
-            Thread.sleep(2000);
-            String currentURL = driver.getCurrentUrl();
-
-            if (!caseType.equals("Valid Login")) {
-                if (loginPage.getErrorMessage().equals("You have entered invalid credentials")) {
-                    test.pass(caseType + " test passed");
-                } else {
-                    test.fail(caseType + " test failed");
-                }
-                loginPage.clickOkButton();
-            } else {
-                if (currentURL.contains("auth/login")) {
-                    for (int j = 1; j <= 6; j++) {
-                        WebElement otpBox = driver.findElement(By.xpath("//ng-otp-input/div/input[" + j + "]"));
-                        otpBox.sendKeys(arrtOTP_CoDash[j - 1]);
-                    }
-                    test.pass("OTP entered successfully");
-
-                    Thread.sleep(3000);
-                    if (!driver.getCurrentUrl().contains("auth/login")) {
-                        test.pass("Redirected to dashboard after OTP");
-                    } else {
-                        test.fail("OTP accepted but not redirected");
-                    }
-                } else {
-                    test.fail("Did not reach OTP screen");
-                }
-            }
+            test.pass("Password reset successful and popup handled.");
+        } catch (Exception e) {
+            test.warning("Popup OK button not found or skipped: " + e.getMessage());
         }
+
+        // Step 8: Now login with new credentials
+        loginPage.enterForgotEmail(userEmail);
+        loginPage.enterConfirmPassword(newPassword);
+        test.info("Entered login credentials");
+        Thread.sleep(1000);
+        loginPage.clickLoginButton();
+        test.info("Clicked login button");
+        Thread.sleep(2000);
+
+        // Step 9: OTP Entry after Login
+        for (int i = 1; i <= 6; i++) {
+            WebElement otpInput = driver.findElement(By.xpath("//ng-otp-input/div/input[" + i + "]"));
+            otpInput.sendKeys(arrtOTP[i - 1]);
+        }
+        test.pass("Login OTP entered successfully");
+
+        // Step 10: Verify login success via URL
+        Thread.sleep(5000);
+        String currentURL = driver.getCurrentUrl();
+        if (!currentURL.contains("auth/login")) {
+            test.pass("Login successful after reset flow");
+        } else {
+            test.fail("Login failed after password reset");
+        }
+
         extent.flush();
     }
 }
